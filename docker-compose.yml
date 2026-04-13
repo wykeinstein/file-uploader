@@ -1,0 +1,20 @@
+services:
+  surveillance-uploader:
+    build: .
+    container_name: surveillance-uploader
+    restart: unless-stopped
+    environment:
+      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+      TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
+      WATCH_DIR: "/data/in"
+      ARCHIVE_DIR: "/data/archive"
+      POLLING_INTERVAL_SEC: "15"
+      STABLE_CHECKS_REQUIRED: "3"
+      MIN_FILE_AGE_SEC: "30"
+      VIDEO_THRESHOLD_MB: "80"
+      VIDEO_EXTENSIONS: ".mp4,.mkv,.avi,.mov"
+      RECURSIVE_SCAN: "true"
+      LOG_LEVEL: "INFO"
+    volumes:
+      - /volume1/surveillance:/data/in:ro
+      - /volume1/surveillance_uploaded:/data/archive
